@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Del Sol · The t-shirt look</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="gate"><img src="logo.png" alt="Del Sol"><span>view on desktop</span></div>
+<div class="site">
+
+<header>
+<div class="nav">
+<div class="side">
+<div class="dd"><button type="button" aria-expanded="false">goggles</button>
+<div class="menu" style="padding: 6px 16px 10px 0; background: #fff"><span>all</span><span>classic</span><span>pool</span><span>surf</span></div></div>
+<span>accessories</span>
+<div class="dd"><button type="button" aria-expanded="false">clothing <span class="dot"></span></button>
+<div class="menu" style="padding: 6px 16px 10px 0; background: #fff"><a href="index.html">drop 02 <span class="muted">live now</span></a><span class="inactive" aria-disabled="true">drop 01</span><a href="archive.html">archive</a></div></div>
+<span aria-hidden="true"></span>
+</div>
+<span class="logo"><img src="logo.png" alt="Del Sol"></span>
+<div class="side"><span aria-hidden="true"></span><span>about</span><span>search</span><span>cart (<span data-bag>0</span>)</span></div>
+</div>
+</header>
+
+<main style="display: flex">
+<section style="flex: 1 1 0; min-width: 0; position: relative">
+<div class="ph" style="height: 980px"></div>
+<a href="index.html" class="u" style="position: absolute; top: 24px; left: 24px">back to drop 02</a>
+</section>
+
+<section style="flex: 1 1 0; min-width: 0; padding: 40px 48px; display: flex; flex-direction: column; gap: 40px">
+
+<div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px">
+<a href="piece.html" class="ph" style="height: 250px" aria-label="t-shirt"></a>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<a href="piece.html" style="display: flex; flex-direction: column; gap: 4px"><span>t-shirt</span><span>[$90]</span></a>
+<div class="row"><span>size</span>
+<div class="sizes" id="sizes">
+<button type="button" data-value="XS" aria-pressed="false">XS</button>
+<button type="button" data-value="S" aria-pressed="false">S</button>
+<button type="button" data-value="M" aria-pressed="false">M</button>
+<button type="button" data-value="L" aria-pressed="false">L</button>
+</div></div>
+<button type="button" class="line-btn" id="addTee">add to bag</button>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 32px">
+<div class="ph" style="height: 250px"></div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-direction: column; gap: 4px"><span>pool goggles <span class="muted" data-gog>choc</span></span><span>$170</span></div>
+<div class="row"><span>size</span><span class="muted">one size</span></div>
+<div class="row"><span>colour</span>
+<div class="swatches" id="gogs">
+<button type="button" data-value="choc" aria-label="choc" aria-pressed="true"><span style="background: #4a2a1c"></span></button>
+<button type="button" data-value="black" aria-label="black" aria-pressed="false"><span style="background: #111111"></span></button>
+</div></div>
+<button type="button" class="line-btn" id="addGog">add to bag</button>
+</div>
+</div>
+
+<div style="border-top: 1px solid #1a1a1a; padding-top: 24px; display: flex; flex-direction: column; gap: 12px">
+<div class="row"><span style="font-weight: 500">the complete look</span><span><s class="muted">[$260]</s> [$230]</span></div>
+<span class="muted">t-shirt <span data-size>[size]</span> + pool goggles <span data-gog>choc</span>, one click, [$30] off</span>
+<button type="button" class="solid-btn" id="addLook">add the look to bag</button>
+<span class="msg" id="msg" hidden></span>
+</div>
+
+</section>
+</main>
+
+<aside class="drawer" id="drawer" aria-label="Bag">
+<div class="row"><span style="font-weight: 500">bag (<span data-bag>0</span>)</span><button type="button" id="closeBag" style="padding: 8px">close</button></div>
+<div id="lines" style="display: flex; flex-direction: column; gap: 16px"></div>
+<div class="foot">
+<div class="row"><span>shipping</span><span class="muted">calculated at checkout</span></div>
+<button type="button" class="solid-btn">checkout</button>
+</div>
+</aside>
+</div>
+
+<script src="site.js"></script>
+<script>
+var size = null, gog = 'choc', lines = [];
+var msg = document.getElementById('msg');
+var drawer = document.getElementById('drawer');
+
+picker(document.getElementById('sizes'), function (v) {
+  size = v; msg.hidden = true;
+  document.querySelectorAll('[data-size]').forEach(function (el) { el.textContent = v; });
+});
+picker(document.getElementById('gogs'), function (v) {
+  gog = v;
+  document.querySelectorAll('[data-gog]').forEach(function (el) { el.textContent = v; });
+});
+
+function needSize() {
+  if (size) return false;
+  msg.textContent = 'pick a t-shirt size first'; msg.hidden = false; return true;
+}
+function add(title, sub, save, price) {
+  lines.push({ title: title, sub: sub, save: save, price: price });
+  var box = document.getElementById('lines');
+  box.innerHTML = '';
+  lines.forEach(function (l) {
+    var row = document.createElement('div');
+    row.className = 'line';
+    var img = document.createElement('div'); img.className = 'ph';
+    var mid = document.createElement('div');
+    mid.style.cssText = 'display:flex;flex-direction:column;gap:4px';
+    [[l.title, ''], [l.sub, 'muted'], [l.save, 'muted']].forEach(function (p) {
+      if (!p[0]) return;
+      var s = document.createElement('span'); s.textContent = p[0]; if (p[1]) s.className = p[1]; mid.appendChild(s);
+    });
+    var pr = document.createElement('span'); pr.textContent = l.price;
+    row.appendChild(img); row.appendChild(mid); row.appendChild(pr);
+    box.appendChild(row);
+  });
+  setBag(lines.length);
+  msg.hidden = true;
+  drawer.classList.add('open');
+}
+
+document.getElementById('addTee').addEventListener('click', function () {
+  if (needSize()) return; add('t-shirt', 'size ' + size, '', '[$90]');
+});
+document.getElementById('addGog').addEventListener('click', function () {
+  add('pool goggles', gog, '', '$170');
+});
+document.getElementById('addLook').addEventListener('click', function () {
+  if (needSize()) return; add('the t-shirt look', 't-shirt ' + size + ' + pool goggles ' + gog, 'look saving [$30]', '[$230]');
+});
+document.getElementById('closeBag').addEventListener('click', function () { drawer.classList.remove('open'); });
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Del Sol · T-shirt</title>
+<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<div class="gate"><img src="logo.png" alt="Del Sol"><span>view on desktop</span></div>
+<div class="site">
+
+<header>
+<div class="nav">
+<div class="side">
+<div class="dd"><button type="button" aria-expanded="false">goggles</button>
+<div class="menu" style="padding: 6px 16px 10px 0; background: #fff"><span>all</span><span>classic</span><span>pool</span><span>surf</span></div></div>
+<span>accessories</span>
+<div class="dd"><button type="button" aria-expanded="false">clothing <span class="dot"></span></button>
+<div class="menu" style="padding: 6px 16px 10px 0; background: #fff"><a href="index.html">drop 02 <span class="muted">live now</span></a><span class="inactive" aria-disabled="true">drop 01</span><a href="archive.html">archive</a></div></div>
+<span aria-hidden="true"></span>
+</div>
+<span class="logo"><img src="logo.png" alt="Del Sol"></span>
+<div class="side"><span aria-hidden="true"></span><span>about</span><span>search</span><span>cart (<span data-bag>0</span>)</span></div>
+</div>
+</header>
+
+<main style="display: flex">
+<section style="flex: 1 1 0; min-width: 0; position: relative">
+<div class="ph" style="height: 1040px"></div>
+<a href="index.html" class="u" style="position: absolute; top: 24px; left: 24px">back to drop 02</a>
+</section>
+
+<section style="flex: 1 1 0; min-width: 0; display: flex; justify-content: center; padding: 96px 48px 48px">
+<div style="width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 22px">
+
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span class="muted">drop 02 · 1 of 3</span>
+<span>t-shirt</span>
+<span id="price">[$90]</span>
+</div>
+<p class="muted" style="margin: 0; line-height: 1.6">[one line on the piece: fabric, fit, where it's made]</p>
+
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px">
+<legend style="padding: 0 0 8px">buy as</legend>
+<div id="mode" style="display: flex; flex-direction: column; gap: 8px">
+<button type="button" class="option" data-value="piece" aria-pressed="true"><span>the t-shirt</span><span>[$90]</span></button>
+<button type="button" class="option" data-value="look" aria-pressed="false"><span>the look, with pool goggles</span><span>[$230] <span class="muted">save [$30]</span></span></button>
+</div>
+</fieldset>
+
+<div class="row"><span>size</span>
+<div class="sizes" id="sizes">
+<button type="button" data-value="XS" aria-pressed="false">XS</button>
+<button type="button" data-value="S" aria-pressed="false">S</button>
+<button type="button" data-value="M" aria-pressed="false">M</button>
+<button type="button" data-value="L" aria-pressed="false">L</button>
+</div></div>
+
+<div class="row" id="gogRow" hidden><span>goggles <span class="muted" id="gogName">choc</span></span>
+<div class="swatches" id="gogs">
+<button type="button" data-value="choc" aria-label="choc" aria-pressed="true"><span style="background: #4a2a1c"></span></button>
+<button type="button" data-value="black" aria-label="black" aria-pressed="false"><span style="background: #111111"></span></button>
+</div></div>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<button type="button" class="solid-btn" id="add">add to bag</button>
+<span class="msg" id="msg" hidden></span>
+<span class="u" style="align-self: flex-end">size guide</span>
+</div>
+
+<div style="border-bottom: 1px solid #e4e4e4">
+<details><summary>more details</summary><p>[fabric, care, model wears size S]</p></details>
+<details><summary>shipping and returns</summary><p>[shipping times, returns window]</p></details>
+<details><summary>assistance</summary><p>[contact email]</p></details>
+</div>
+
+<div style="display: flex; gap: 14px; align-items: center">
+<div class="ph" style="width: 64px; height: 80px"></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span class="muted">worn with</span><span>pool goggles choc · $170</span></div>
+</div>
+
+</div>
+</section>
+</main>
+</div>
+
+<script src="site.js"></script>
+<script>
+var mode = 'piece', size = null, gog = 'choc', bag = 0;
+var msg = document.getElementById('msg');
+var addBtn = document.getElementById('add');
+
+picker(document.getElementById('mode'), function (v) {
+  mode = v; msg.hidden = true;
+  var look = v === 'look';
+  document.getElementById('gogRow').hidden = !look;
+  document.getElementById('price').textContent = look ? '[$230] for the look' : '[$90]';
+  addBtn.textContent = look ? 'add the look to bag' : 'add to bag';
+});
+picker(document.getElementById('sizes'), function (v) { size = v; msg.hidden = true; });
+picker(document.getElementById('gogs'), function (v) { gog = v; document.getElementById('gogName').textContent = v; });
+
+addBtn.addEventListener('click', function () {
+  if (!size) { msg.textContent = 'pick a size first'; msg.className = 'msg'; msg.hidden = false; return; }
+  var what = mode === 'look' ? 'the t-shirt look (' + size + ', pool goggles ' + gog + ')' : 't-shirt, size ' + size;
+  bag += 1; setBag(bag);
+  msg.textContent = 'added: ' + what; msg.className = 'msg ok'; msg.hidden = false;
+});
+</script>
+</body>
+</html>

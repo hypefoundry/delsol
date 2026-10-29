@@ -1,0 +1,73 @@
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+body{margin:0;background:#ffffff;font-family:Inter,system-ui,sans-serif;font-size:13px;color:#1a1a1a}
+a{color:#1a1a1a;text-decoration:none}a:hover{color:#6f6f6f}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+h2{font-size:13px;font-weight:500;margin:0}
+.muted{color:#6f6f6f}
+.inactive{color:#8a8a8a;cursor:not-allowed}
+.u{text-decoration:underline;text-underline-offset:4px}
+
+/* desktop-only gate */
+.gate{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;text-align:center}
+.gate img{height:22px;width:auto}
+@media (max-width:900px){.site{display:none}.gate{display:flex}}
+
+/* placeholders: grey box with a cross */
+.ph{display:block;background:linear-gradient(to top right,transparent calc(50% - .5px),#c4c4c0 50%,transparent calc(50% + .5px)),linear-gradient(to bottom right,transparent calc(50% - .5px),#c4c4c0 50%,transparent calc(50% + .5px)),#ebebe8}
+.ph.dim{opacity:.7}
+
+/* nav */
+header{position:relative;z-index:5;font-size:12px}
+header.over{position:absolute;top:0;left:0;right:0}
+header.grey{background:#f6f5f3}
+.nav{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:start;padding:26px 32px}
+.nav .side{display:flex;justify-content:space-between;align-items:flex-start}
+.nav .logo{display:block;line-height:0}
+.nav .logo img{height:26px;width:auto;display:block}
+.dd{position:relative}
+.dd>button{display:flex;align-items:center;gap:6px}
+.dd .dot{width:5px;height:5px;border-radius:50%;background:#949494}
+.dd .menu{display:none;position:absolute;top:100%;left:0;padding-top:6px;flex-direction:column;gap:4px;white-space:nowrap}
+.dd.open .menu{display:flex}
+
+/* layout */
+.pad{padding-left:32px;padding-right:32px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{display:flex;flex-direction:column;gap:4px}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;padding:64px 32px 40px;color:#6f6f6f}
+footer .links{display:flex;gap:32px}
+
+/* sign-up */
+.signup{background:#f6f5f3;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding:48px 16px}
+.signup form{display:flex;align-items:flex-end}
+.signup input{font:inherit;width:260px;border:0;border-bottom:1px solid #1a1a1a;background:transparent;padding:8px 0;outline:none}
+.signup button{padding:8px 0 8px 16px;border-bottom:1px solid #1a1a1a;white-space:nowrap}
+
+/* product controls */
+.row{display:flex;justify-content:space-between;align-items:center}
+.sizes{display:flex;gap:8px}
+.sizes button{padding:8px 6px;text-underline-offset:6px}
+.sizes button[aria-pressed="true"]{text-decoration:underline}
+.swatches{display:flex;gap:6px}
+.swatches button{width:32px;height:32px;display:flex;align-items:center;justify-content:center}
+.swatches span{width:16px;height:16px;display:block}
+.swatches button[aria-pressed="true"] span{box-shadow:0 0 0 2px #fff,0 0 0 3px #1a1a1a}
+.line-btn{border-bottom:1px solid #1a1a1a;padding:12px 0}
+.solid-btn{height:48px;background:#3b2a20;color:#fff;width:100%}
+.solid-btn:hover{background:#2c1f17}
+.msg{color:#9a3b1e}
+.msg.ok{color:#1a1a1a}
+.option{display:flex;justify-content:space-between;align-items:center;min-height:48px;padding:0 16px;border:1px solid #dddddd;background:#fff;width:100%;text-align:left}
+.option[aria-pressed="true"]{border-color:#1a1a1a}
+details{border-top:1px solid #e4e4e4}
+summary{cursor:pointer;padding:14px 0}
+details p{margin:0 0 14px;color:#6f6f6f}
+
+/* bag drawer */
+.drawer{display:none;position:fixed;top:0;right:0;bottom:0;width:400px;background:#fff;border-left:1px solid #e4e4e4;box-shadow:-12px 0 32px rgba(0,0,0,.06);padding:24px 28px;flex-direction:column;gap:20px;z-index:20}
+.drawer.open{display:flex}
+.drawer .line{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:14px;padding-bottom:16px;border-bottom:1px solid #eee}
+.drawer .line .ph{height:90px}
+.drawer .foot{margin-top:auto;display:flex;flex-direction:column;gap:12px}

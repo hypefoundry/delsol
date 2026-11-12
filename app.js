@@ -203,22 +203,23 @@
     })) : '<div class="v3-opt"><span>colour <span class="muted">' + (col.label === 'zip' ? 'black' : col.label) + '</span></span></div>';
     var sizes = p.sizes ? v3Text('size', size, p.sizes, 'data-product-size') : '';
 
-    var completeLook = '';
-    if (handle !== 'holiday-case') {
-      var pairs;
-      if (p.cats.indexOf('goggles') > -1) {
-        var styleKey = handle.split('-')[0], cols = STYLES[styleKey];
-        // Both shots wear this style, one colour each, so the two looks read differently.
-        pairs = [['pink', goggleIndex(styleKey + '-' + cols[0])], ['lagoon', goggleIndex(styleKey + '-' + cols[1])]];
-      } else {
-        pairs = [[c, goggleIndex('pool-black')], [c, goggleIndex('classic-toast')]];
-      }
-      completeLook = '<section class="complete"><p class="label">complete the look</p><div class="worn-pair">' +
-        pairs.map(function (pr) {
-          var g = GOGGLES[pr[1]];
-          return lookTile(pr[0], pr[1], placeholder('model shot', lookDesc(pr[0], g)));
-        }).join('') + '</div></section>';
+    // Complete the look: both looks feature the exact product on this page, and each tile
+    // opens shop the look with that product already selected.
+    var pairs;
+    if (p.cats.indexOf('goggles') > -1) {
+      var thisGoggle = goggleIndex(handle.split('-')[0] + '-' + c);
+      pairs = [['pink', thisGoggle], ['lagoon', thisGoggle]];
+    } else if (handle === 'scuba-shorts') {
+      pairs = [[c, goggleIndex('pool-black')], [c, goggleIndex('classic-toast')]];
+    } else {
+      // The holiday case comes with every look, so show both.
+      pairs = [['pink', defaultGoggle('pink')], ['lagoon', defaultGoggle('lagoon')]];
     }
+    var completeLook = '<section class="complete"><p class="label">complete the look</p><div class="worn-pair">' +
+      pairs.map(function (pr) {
+        var g = GOGGLES[pr[1]];
+        return lookTile(pr[0], pr[1], placeholder('model shot', lookDesc(pr[0], g)));
+      }).join('') + '</div></section>';
 
     return '<section class="stage" data-handle="' + handle + '" data-colour="' + c + '">' +
       // Every image stacked down the left; the details stay put while they scroll past.
@@ -644,15 +645,15 @@
   function revealNav() {
     if (document.body.classList.contains('is-ready')) return;
     document.body.classList.add('is-ready');
-    setTimeout(function () { document.body.classList.add('nav-done'); }, 1300);
+    setTimeout(function () { document.body.classList.add('nav-done'); }, 800);
   }
   var heroImg = $('.hero-img');
   if (heroImg && !(heroImg.complete && heroImg.naturalWidth)) {
-    heroImg.addEventListener('load', function () { setTimeout(revealNav, 450); });
+    heroImg.addEventListener('load', function () { setTimeout(revealNav, 150); });
     heroImg.addEventListener('error', revealNav);
     setTimeout(revealNav, 2500); // don't hold the nav back if the photo is slow
   } else {
-    setTimeout(revealNav, heroImg ? 450 : 30);
+    setTimeout(revealNav, heroImg ? 150 : 30);
   }
 
   // Warm the cache so colour and goggle swaps feel instant.

@@ -618,3 +618,12 @@ body.is-ready .nav-desktop .nav-dropdown:hover > .nav-link { opacity: 1 !importa
 
 /* Home hero fades in as it loads; the nav follows once it's there. */
 .hero .hero-img { transition: opacity 1s ease; }
+
+/* Quicker nav arrival: shorter fade and a tighter stagger. */
+.site-header .logo, .site-header .nav-link { transition: opacity .5s var(--ease-out), translate .5s var(--ease-out); }
+body.is-ready .site-header .logo { transition-delay: 0s; }
+body.is-ready .nav-left > :nth-child(1) .nav-link, body.is-ready .nav-left > .nav-link:nth-child(1),
+body.is-ready .nav-right > :nth-child(1) { transition-delay: .04s; }
+body.is-ready .nav-left > .nav-link:nth-child(2), body.is-ready .nav-right > :nth-child(2) { transition-delay: .08s; }
+body.is-ready .nav-left > .nav-link:nth-child(3), body.is-ready .nav-right > :nth-child(3) { transition-delay: .12s; }
+body.is-ready .nav-mobile .nav-link { transition-delay: .06s; }

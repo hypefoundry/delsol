@@ -640,35 +640,19 @@
   renderCart();
   route();
   // A timer rather than requestAnimationFrame, so the nav still shows in a background tab.
-  // Site load: run the logo reveal once per visit, then bring the nav and page in.
-  var loader = $('#loader');
-  var skip = document.documentElement.classList.contains('skip-loader') ||
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function revealSite() {
+  // First load: on the home page the hero photo arrives first, then the nav fades in over it.
+  function revealNav() {
+    if (document.body.classList.contains('is-ready')) return;
     document.body.classList.add('is-ready');
-    var app = $('#app'); app.classList.remove('page-enter'); void app.offsetWidth; app.classList.add('page-enter');
-    clearTimeout(enterTimer); enterTimer = setTimeout(function () { app.classList.remove('page-enter'); }, 1600);
     setTimeout(function () { document.body.classList.add('nav-done'); }, 1300);
   }
-  if (skip || !loader) {
-    if (loader) loader.remove();
-    setTimeout(revealSite, 30);
+  var heroImg = $('.hero-img');
+  if (heroImg && !(heroImg.complete && heroImg.naturalWidth)) {
+    heroImg.addEventListener('load', function () { setTimeout(revealNav, 450); });
+    heroImg.addEventListener('error', revealNav);
+    setTimeout(revealNav, 2500); // don't hold the nav back if the photo is slow
   } else {
-    document.body.classList.add('is-loading');
-    var started = Date.now(), done = false;
-    var finish = function () {
-      if (done) return; done = true;
-      // Let the logo finish drawing before lifting the curtain.
-      setTimeout(function () {
-        loader.classList.add('is-leaving');
-        document.body.classList.remove('is-loading');
-        setTimeout(revealSite, 250);
-        setTimeout(function () { loader.remove(); }, 1100);
-        try { sessionStorage.setItem('delsol-loaded', '1'); } catch (e) {}
-      }, Math.max(0, 1500 - (Date.now() - started)));
-    };
-    if (document.readyState === 'complete') finish(); else window.addEventListener('load', finish);
-    setTimeout(finish, 3000); // never hold the page longer than this
+    setTimeout(revealNav, heroImg ? 450 : 30);
   }
 
   // Warm the cache so colour and goggle swaps feel instant.

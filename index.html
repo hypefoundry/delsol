@@ -1,79 +1,77 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Del Sol · Drop 02</title>
-<link rel="icon" href="logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="site.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Del Sol · Prototype</title>
+  <!-- Black mark on light browser tabs, white on dark. -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon-black.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon-black.svg" media="(prefers-color-scheme: light)">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon-white.svg" media="(prefers-color-scheme: dark)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=53">
 </head>
 <body>
-<div class="gate"><img src="logo.png" alt="Del Sol"><span>view on desktop</span></div>
-<div class="site" style="position: relative">
+  <header class="site-header" id="header">
+    <nav class="nav-desktop" aria-label="Main">
+      <div class="nav-left">
+        <div class="nav-dropdown">
+          <a href="#/shop/goggles" class="nav-link">goggles</a>
+          <div class="dropdown-list">
+            <a href="#/shop/goggles">all</a>
+            <a href="#/shop/pool">pool</a>
+            <a href="#/shop/classic">classic</a>
+          </div>
+        </div>
+        <a href="#/shop/accessories" class="nav-link">accessories</a>
+        <a href="#/shop/clothing" class="nav-link">clothing</a>
+      </div>
+      <a href="#/" class="logo" aria-label="Del Sol home"><img class="logo-light" src="https://delsol-salon.com/cdn/shop/files/LogoFFFFFF.png?width=500" alt="Del Sol"><img class="logo-dark" src="https://delsol-salon.com/cdn/shop/t/40/assets/logo.png?width=500" alt="Del Sol"></a>
+      <div class="nav-right">
+        <a href="#/shop/looks" class="nav-link">shop the look</a>
+        <a href="#/about" class="nav-link">about</a>
+        <button class="nav-link cart-toggle" type="button">bag (<span class="cart-count">0</span>)</button>
+      </div>
+    </nav>
+    <nav class="nav-mobile" aria-label="Main">
+      <a href="#/" class="logo" aria-label="Del Sol home"><img class="logo-light" src="https://delsol-salon.com/cdn/shop/files/LogoFFFFFF.png?width=500" alt="Del Sol"><img class="logo-dark" src="https://delsol-salon.com/cdn/shop/t/40/assets/logo.png?width=500" alt="Del Sol"></a>
+      <div class="nav-mobile-right">
+        <button class="nav-link menu-toggle" type="button" aria-expanded="false">menu</button>
+        <button class="nav-link cart-toggle" type="button">bag (<span class="cart-count">0</span>)</button>
+      </div>
+      <div class="mobile-menu" id="mobile-menu">
+        <a href="#/shop/goggles" class="strong">goggles</a>
+        <a href="#/shop/goggles">all</a>
+        <a href="#/shop/pool">pool</a>
+        <a href="#/shop/classic">classic</a>
+        <a href="#/shop/accessories" class="strong">accessories</a>
+        <a href="#/shop/clothing" class="strong">clothing</a>
+        <a href="#/shop/looks" class="strong">shop the look</a>
+        <a href="#/about" class="strong">about</a>
+      </div>
+    </nav>
+  </header>
 
-<header class="over">
-<div class="nav">
-<div class="side">
-<div class="dd"><button type="button" aria-expanded="false">goggles</button>
-<div class="menu"><span>all</span><span>classic</span><span>pool</span><span>surf</span></div></div>
-<span>accessories</span>
-<div class="dd"><button type="button" aria-expanded="false">clothing <span class="dot"></span></button>
-<div class="menu"><a href="index.html">drop 02 <span class="muted">live now</span></a><span class="inactive" aria-disabled="true">drop 01</span><a href="archive.html">archive</a></div></div>
-<span aria-hidden="true"></span>
-</div>
-<span class="logo"><img src="logo.png" alt="Del Sol"></span>
-<div class="side"><span aria-hidden="true"></span><span>about</span><span>search</span><span>cart (<span data-bag>0</span>)</span></div>
-</div>
-</header>
+  <main id="app"></main>
 
-<main>
-<section style="position: relative">
-<div class="ph" style="height: 720px"></div>
-<div style="position: absolute; left: 32px; bottom: 32px; display: flex; flex-direction: column; gap: 6px">
-<span>drop 02</span>
-<span style="font-size: 44px; letter-spacing: -0.03em; line-height: 1">Drop 02 live headline</span>
-</div>
-</section>
+  <footer class="site-footer">
+    <form class="newsletter" id="newsletter">
+      <label for="email">10% off your first purchase</label>
+      <div class="email-field"><input id="email" type="email" placeholder="email" autocomplete="off"><button type="submit">sign up</button></div>
+    </form>
+    <div class="footer-links">
+      <div><a href="#/shop/goggles">goggles</a><a href="#/shop/accessories">accessories</a><a href="#/shop/clothing">clothing</a><a href="#/shop/looks">shop the look</a></div>
+      <div><a href="#/about">about</a><a href="#/about">shipping</a><a href="#/about">returns &amp; exchanges</a><a href="#/about">contact</a></div>
+    </div>
+  </footer>
 
-<p class="muted" style="text-align: center; margin: 40px 16px 56px">Shop the looks or shop each piece</p>
+  <div class="drawer-scrim" id="scrim"></div>
+  <aside class="cart-drawer" id="cart" aria-label="Cart" aria-hidden="true"></aside>
+  <div class="toast" id="toast" role="status"></div>
 
-<section class="pad">
-<h2 style="margin-bottom: 16px">shop the looks</h2>
-<div class="grid3">
-<div class="card" style="gap: 8px"><div class="ph" style="aspect-ratio: 4 / 5"></div><div class="row" style="margin-top: 4px"><span>the t-shirt look</span><span class="muted u">shop the look</span></div></div>
-<div class="card" style="gap: 8px"><div class="ph" style="aspect-ratio: 4 / 5"></div><div class="row" style="margin-top: 4px"><span>the bikini look</span><span class="muted u">shop the look</span></div></div>
-<div class="card" style="gap: 8px"><div class="ph" style="aspect-ratio: 4 / 5"></div><div class="row" style="margin-top: 4px"><span>the short look</span><span class="muted u">shop the look</span></div></div>
-</div>
-</section>
-
-<section class="pad" style="padding-top: 96px">
-<h2 style="margin-bottom: 16px">or shop each piece</h2>
-<div class="grid3">
-<div class="card"><div class="ph" style="aspect-ratio: 4 / 5; margin-bottom: 6px"></div><span>t-shirt</span><span>[$90]</span></div>
-<div class="card"><div class="ph" style="aspect-ratio: 4 / 5; margin-bottom: 6px"></div><span>bikini</span><span>[$140]</span></div>
-<div class="card"><div class="ph" style="aspect-ratio: 4 / 5; margin-bottom: 6px"></div><span>swim short</span><span>[$110]</span></div>
-<div class="card"><div class="ph" style="aspect-ratio: 4 / 5; margin-bottom: 6px"></div><span>pool goggles <span class="muted">choc</span></span><span>$170</span></div>
-<div class="card"><div class="ph" style="aspect-ratio: 4 / 5; margin-bottom: 6px"></div><span>classic goggles <span class="muted">toast</span></span><span>$165</span></div>
-<div class="card"><div class="ph" style="aspect-ratio: 4 / 5; margin-bottom: 6px"></div><span>pool goggles <span class="muted">black</span></span><span>$170</span></div>
-</div>
-</section>
-
-<section class="signup" style="margin: 120px 32px 0">
-<span style="font-weight: 500">drop 03, first look</span>
-<form data-notify>
-<input type="email" aria-label="email" placeholder="you@email.com" required>
-<button type="submit">notify me</button>
-</form>
-</section>
-</main>
-
-<footer>
-<a href="archive.html" class="u">drop archive</a>
-<div class="links"><span>shipping</span><span>returns</span><span>instagram</span></div>
-</footer>
-</div>
-<script src="site.js"></script>
+  <script src="app.js?v=45"></script>
 </body>
 </html>

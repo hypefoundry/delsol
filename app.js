@@ -144,7 +144,7 @@
 
   // ---------- Pages ----------
   function home() {
-    var featured = [{ p: 'pool-goggles', c: 'black' }, { p: 'pool-goggles', c: 'choc' }, { p: 'scuba-shorts', c: 'lagoon' }, { p: 'classic-goggles', c: 'toast' }];
+    var featured = [{ p: 'pool-goggles', c: 'black' }, { p: 'pool-goggles', c: 'choc' }, { p: 'classic-goggles', c: 'black' }, { p: 'classic-goggles', c: 'toast' }]; // eyewear only on the home page
     return '<section class="hero"><picture><source media="(max-width: 1000px)" srcset="' + img(FILES.wornPoolBlack, 1000) + '">' +
       '<img class="hero-img" src="' + LOCAL.hero + '" alt="Del Sol summer campaign"></picture>' +
       '<img class="sticker" src="' + LOCAL.sticker + '" alt="Del Sol World sticker"></section>' +
@@ -450,6 +450,36 @@
 
   // Swap a page's contents without re-rendering it. The details update instantly (they
   // look the same), and the image on the left fades out and back in when it changes.
+  // Patch a live element to match a freshly rendered one, touching only what changed, so
+  // picking an option doesn't rebuild (and visibly re-draw) the whole details panel.
+  var KEEP = ['is-loaded', 'is-added'];
+  function morph(a, b) {
+    if (a.nodeType !== b.nodeType || a.nodeName !== b.nodeName) { a.replaceWith(b.cloneNode(true)); return; }
+    if (a.nodeType === 3) { if (a.nodeValue !== b.nodeValue) a.nodeValue = b.nodeValue; return; }
+    if (a.nodeType !== 1) return;
+    var srcChanged = a.tagName === 'IMG' && a.getAttribute('src') !== b.getAttribute('src');
+    Array.prototype.slice.call(b.attributes).forEach(function (at) {
+      if (at.name === 'style') return;
+      if (at.name === 'class') {
+        var keep = KEEP.filter(function (k) { return a.classList.contains(k) && !(k === 'is-loaded' && srcChanged); });
+        var val = (at.value + ' ' + keep.join(' ')).trim();
+        if (a.getAttribute('class') !== val) a.setAttribute('class', val);
+        return;
+      }
+      if (a.getAttribute(at.name) !== at.value) a.setAttribute(at.name, at.value);
+    });
+    Array.prototype.slice.call(a.attributes).forEach(function (at) {
+      if (at.name !== 'style' && !b.hasAttribute(at.name)) a.removeAttribute(at.name);
+    });
+    if (srcChanged) a.classList.remove('is-loaded');
+    if (a.classList.contains('is-added')) return; // leave "added to bag" showing until it times out
+    var ac = a.childNodes, bc = b.childNodes, i;
+    for (i = 0; i < bc.length; i++) {
+      if (i < ac.length) morph(ac[i], bc[i]); else a.appendChild(bc[i].cloneNode(true));
+    }
+    while (ac.length > bc.length) a.removeChild(a.lastChild);
+  }
+
   function softUpdate(html) {
     // The entrance animation is for arriving on a page; without this, the swapped-in
     // details would replay it and look like a reload.
@@ -465,7 +495,7 @@
     // Collection: the filters switch instantly; only the products fade out and the new set rises in.
     var head = $('#app .collection-head'), nextHead = next.querySelector('.collection-head');
     if (head && nextHead) {
-      head.innerHTML = nextHead.innerHTML;
+      morph(head, nextHead);
       var cur = head.nextElementSibling, nu = nextHead.nextElementSibling;
       if (cur && nu) {
         clearTimeout(head._swap);
@@ -482,7 +512,7 @@
     [['.v3-right', false], ['.stage .info', false], ['.complete', false], ['.v3-left', true], ['.stack', true]].forEach(function (pair) {
       var cur = $('#app ' + pair[0]), nu = next.querySelector(pair[0]);
       if (!cur || !nu) return;
-      if (!pair[1]) { cur.innerHTML = nu.innerHTML; return; }
+      if (!pair[1]) { morph(cur, nu); return; }
       if (cur.getAttribute('data-src') === nu.innerHTML) return;
       cur.setAttribute('data-src', nu.innerHTML);
       // Look page: the new shot fades in on top of the current one, then the old one is removed.
